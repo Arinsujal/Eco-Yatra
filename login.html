@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-in/Sign-Up</title>
+    <link rel="stylesheet" href="Style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">   
+            <div class="logo">
+                <a href="index.html"><h1>Eco-Yatra</h1></a>
+            </div>
+        </nav>
+    </header>
+    <section class="login-section">
+        <div class="login-containerclass">
+            <div class="login-carddiv">
+                <div class="login-content">
+                    <h2><ul>Log-in</ul></h2>
+                    <form id="MainForm">
+                        <div class="login-inputfield">
+                            <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="login-inputfield">
+                            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="login-inputfield">
+                            <button type="submit" class="login-btn">Log in</button>
+                        </div>
+                    </form>
+                    <p id="other-methods"><b>OR</b></p>
+                    <div class="signup-inputfield">
+                        <button type="button" class="signup-btn"><a href="signup.html">Sign Up</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="module">
+            
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        import { getDatabase, get, ref, child } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyCxmRj3JRle1vNuWyizL4J_-EIDtqVPHUI",
+          authDomain: "fir-1c8b0.firebaseapp.com",
+          projectId: "fir-1c8b0",
+          storageBucket: "fir-1c8b0.firebasestorage.app",
+          messagingSenderId: "1099389764228",
+          appId: "1:1099389764228:web:bb258d1d29f02f7c9938d1",
+          measurementId: "G-V338M021J7"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+        const auth = getAuth(app);
+        const dbref = ref(db);
+        
+        let Email = document.getElementById("email");
+        let Password = document.getElementById("password");
+        let Name = document.getElementById("name");
+        let MainForm = document.getElementById("MainForm");
+
+        let SignIn = evt => {
+            evt.preventDefault();
+
+            signInWithEmailAndPassword(auth, Email.value, Password.value)
+            .then((userCredential) => {
+                get(child(dbref, `users/${userCredential.user.uid}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        sessionStorage.setItem("user", JSON.stringify({
+                            name: snapshot.val().Name,
+                            email: snapshot.val().Email
+                        }))
+                        sessionStorage.setItem("userId", JSON.stringify(userCredential.user.uid));
+                        alert("Welcome " + snapshot.val().Name);
+                        window.location.href = 'index.html';
+                    }
+                    else {
+                        alert("No data available");
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                });
+                alert("Signed In Successfully");
+            })
+            .catch((error)=> {
+                alert(error.message);
+                console.log(error.code);
+                console.log(error.message);
+            })
+        }
+        MainForm.addEventListener('submit', SignIn);
+
+    </script>
+    
+</body>
+</html>

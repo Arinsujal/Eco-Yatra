@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">   
+            <div class="logo">
+                <h1>Eco-Yatra</h1>
+            </div>
+        </nav>
+        <section class="signup-container">
+            <div class="signup-content">
+            <form id="MainForm">
+                <h2 class="signup-title">Sign Up</h2>
+                <div class="signup-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" required>   
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="signup-button">Sign Up</button>
+                </div>
+            </form>
+            </div>
+        </section>
+        <script type="module">
+            
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+            import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+            const firebaseConfig = {
+              apiKey: "AIzaSyCxmRj3JRle1vNuWyizL4J_-EIDtqVPHUI",
+              authDomain: "fir-1c8b0.firebaseapp.com",
+              projectId: "fir-1c8b0",
+              storageBucket: "fir-1c8b0.firebasestorage.app",
+              messagingSenderId: "1099389764228",
+              appId: "1:1099389764228:web:bb258d1d29f02f7c9938d1",
+              measurementId: "G-V338M021J7"
+            };
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getDatabase();
+            const auth = getAuth(app);
+            
+            
+            let Email = document.getElementById("email");
+            let Password = document.getElementById("password");
+            let Name = document.getElementById("name");
+            let MainForm = document.getElementById("MainForm");
+
+            let SignUp = evt => {
+                evt.preventDefault();
+
+                createUserWithEmailAndPassword(auth, Email.value, Password.value)
+                .then((userCredential) => {
+                    console.log(userCredential);
+                    const user = userCredential.user;
+                    console.log(user);
+                    alert("User Created Successfully");
+                    set(ref(db, 'users/' + user.uid), {
+                        username: Name.value,
+                        email: Email.value,
+                        password: Password.value
+                    })
+                    .then(() => {
+                        console.log("User data saved successfully.");
+                    })
+                    window.open('login.html', '_blank');
+                })
+                .catch((error)=> {
+                    alert(error.message);
+                    console.log(error.code);
+                    console.log(error.message);
+                })
+            }
+            MainForm.addEventListener('submit', SignUp);
+
+        </script>
+</body>
+</html>
