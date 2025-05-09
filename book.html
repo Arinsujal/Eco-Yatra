@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Now</title>
+        <link rel="stylesheet" href="Style.css">
+    
+        <!-- Firebase App (core SDK) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+        <script defer src="script.js"></script>
+    </head>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html"><h1>Eco-Yatra</h1></a>
+            </div>
+            <div class="authentications">
+                <div class="login">
+                    <button onclick="window.open('login.html', '_blank')">Login</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="booking-content">
+        <h2>Book Your Eco-Friendly Journey</h2>
+        <form id="booking-form" class="booking-form">
+            <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+            </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination" id="dest">Destination</label>
+                        <input type="text" name="destination" id="destination" required>
+                    </div> 
+                    <div class="form-group">
+                        <label for="date">Check-in Date</label>
+                        <input type="date" name="date" id="date" required>
+                    </div>  
+                </form>
+            </div>
+            <div class="booking-button">
+                <button type="submit" form="booking-form" id="finalbook">Book Now</button>
+            </div>
+        </div>
+        <!-- filter options for tables  -->
+        <div class="filters">
+            <label for="filter-destination">Filter by Destination:</label>
+            <input type="text" id="filter-destination" placeholder="e.g. Manali">
+          
+            <label for="filter-date">Filter by Date:</label>
+            <input type="date" id="filter-date">
+          
+            <button onclick="applyFilters()">Apply Filters</button>
+            <button onclick="clearFilters()">Clear Filters</button>
+          </div>
+          
+         <!-- ends here -->
+         <!--table starts here  -->
+            <!-- addidng tables -->
+    <h3>All Bookings</h3>
+    <table border="1" id="bookings-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Destination</th>
+          <th>Check-in Date</th>
+        </tr>
+      </thead>
+      <tbody id="bookings-body">
+        <!-- Bookings will be inserted here -->
+      </tbody>
+    </table>
+
+            <!-- table ends here -->
+    </main>
+    <!-- table script -->
+    <script>
+        function loadBookings() {
+            const tableBody = document.getElementById("bookings-body");
+            db.ref("bookings").on("value", (snapshot) => {
+              tableBody.innerHTML = ""; // Clear table first
+              snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                  <td>${data.name}</td>
+                  <td>${data.email}</td>
+                  <td>${data.phone}</td>
+                  <td>${data.destination}</td>
+                  <td>${data.checkin_date}</td>
+                `;
+                tableBody.appendChild(row);
+              });
+            });
+          }
+          
+          // Load bookings on page load
+          document.addEventListener("DOMContentLoaded", loadBookings);
+          
+    </script>
+    <!-- ending -->
+
+    <script>
+        // Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCxmRj3JRle1vNuWyizL4J_-EIDtqVPHUI",
+    authDomain: "fir-1c8b0.firebaseapp.com",
+    databaseURL: "https://fir-1c8b0-default-rtdb.firebaseio.com",
+    projectId: "fir-1c8b0",
+    storageBucket: "fir-1c8b0.firebasestorage.app",
+    messagingSenderId: "1099389764228",
+    appId: "1:1099389764228:web:bb258d1d29f02f7c9938d1",
+    measurementId: "G-V338M021J7"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  
+  // Form submission
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("booking-form");
+  
+    document.getElementById("finalbook").addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent page reload
+  
+      // Get form values
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const destination = document.getElementById("destination").value;
+      const date = document.getElementById("date").value;
+  
+      // Push data to Firebase
+      db.ref("bookings").push({
+        name: name,
+        email: email,
+        phone: phone,
+        destination: destination,
+        checkin_date: date
+      })
+      .then(() => {
+        alert("Booking successful!");
+        form.reset(); // Clear form
+      })
+      .catch((error) => {
+        alert("Error booking: " + error.message);
+      });
+    });
+  });
+  
+    </script>
+</body>
+</html>
