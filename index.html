@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco-Yatra</title>
     <link rel="stylesheet" href="Style.css">
+    <script src="./script.js"></script>
 </head>
 <body>
     <header>
@@ -15,58 +16,99 @@
             <div class="menu">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="About.html">About Us</a></li>
-                    <li><a href="Book-bus.html">Eco-Bus</a></li>
-                    <li><a href="Book-Train.html">Trains</a></li>
-                    <li><a href="Book-Flight.html">Flights</a></li>
+                    <li><a href="#about-us">About Us</a></li>
+                    <li><a href="#book-bus">Eco-Bus</a></li>
+                    <li><a href="#book-train">Trains</a></li>
                 </ul>
             </div>
-            <div class="searchbar">
-                
-                <input type="search" placeholder=" Search Destination..." name="search" id="search">
-                <button type="search">search</button>  
+            <div class="currentlocation">
+                <input type="search" placeholder="Enter Your Current location.." name="search" id="search" oninput="showSuggestions()">
+                <button type="submit">Search</button>  
+                <div id="suggestions" class="suggestions-list" style="color: black; font-weight: bold;"></div>
             </div>
             <div class="authentications">
                 <div class="login">
-                    <button>Login</button>
+                    <button type="button" onclick="location.href='login.html','_self'">Log in</button>
                 </div>
-                <div class="signup">
-                    <button>Sign up</button>
-                </div>
+                <script src="script.js"></script>
             </div>
         </nav>
+        
+
     </header>
     <section class="hero">
         <div class="hero-content">
             <h1><u>  Travel with Eco-Yatra</u></h1>
             <p>Travel with Eco-Yatra and make your journey eco-friendly</p>
         </div>
-        <div class="booking-details">
-            <div class="Location">
-                <h4>Destination</h4>
-                <input type="search" placeholder=" Enter Destination" name="source" id="dest">
-            </div>
-            <div class="Date" id="checkin">
-                <h4>Check-in date</h4>
-                <input type="date" name="checkindate" id="checkindate">
-            </div>
-            <div class="Date" id="checkout">
-                <h4>Check-out date</h4>
-                <input type="date" name="checkoutdate" id="checkoutdate">
-            </div>
-            <div class="guest-list">
-                <h4>Guests</h4>
-                <select>
-                    <option value="1">1 Guest, 1 Room</option>
-                    <option value="2">2 Guest, 1 Room</option>
-                    <option value="3">2 Guest, 2 Room</option>
-                    <option value="4">4 Guest, 2 Room</option>
-                </select>
+        <div class="Hotel-Booking">
+            <div class="hotel-booking">
+                <button onclick="window.open('hotels.html', '_blank')">Book Your Eco-Friendly Hotel Now</button>
             </div>
         </div>
-        <div class="go-button">
-            <button>Go</button>
+    </section> 
+    <main>
+        <div class="aboutus-container">
+            <div class="aboutus-section" id="about-us">
+                <h2><b>About Eco-Yatra</b></h2>
+                <p class="about-content">Welcome to Eco-Yatra - Your Path to Sustainable   Travel. <br>
+                    <br>At Eco-Yatra, we believe that exploring the world shouldn't come at the cost of the environment. We're a passionate team of nature lovers, sustainability advocates, and travel enthusiasts dedicated to making eco-friendly travel accessible, easy, and impactful.
+                    <br>
+                    <br>Our mission is to empower travelers to make informed choices that benefit both their adventures and the planet. We curate a selection of eco-conscious travel options, from accommodations and transportation to activities and dining, ensuring that every aspect of your journey aligns with your values.<br><br>
+                        
+                    Our platform is designed to help conscious travelers book journeys that align with their values. Whether it's choosing green-certified accommodations, low-emission transport, or nature-positive experiences, Eco-Yatra ensures every trip contributes to a healthier planet.<br><br>
+                    We understand that travel is not just about the destination; it's about the journey. That's why we strive to provide you with the tools and resources you need to make sustainable choices every step of the way. From eco-friendly travel tips to carbon offset programs, we're here to support you in your quest for responsible travel.<br><br>
+                    Join us in our mission to protect the planet while exploring its beauty. Together, we can create a world where travel and sustainability go hand in hand. Whether you're a seasoned eco-traveler or just starting your journey, Eco-Yatra is here to guide you every step of the way.<br><br>
+                    Thank you for choosing Eco-Yatra as your travel partner. Let's embark on this adventure together, leaving a positive impact on the world we explore.
+                    <br><br>
+                </p>
+            </div>
         </div>
+        <div class="book-bus-container" id="book-bus">
+            <h2><b>Book Your Eco-Friendly Bus</b></h2>
+            <div class="book-bus-section">
+                
+                <div class="bus-booking-website" id="website-1">
+                    <a href="https://www.makemytrip.com/bus-tickets/" target="_blank"><img src="images/makemytrip.png" alt="makemytrip" class="bus-image" id="1"></a>
+                </div>
 
+                <div class="bus-booking-website" id="website-2">
+                    <a href="https://www.nuego.in/" target="_blank"><img src="images/nue-go.png" alt="nue-go" class="bus-image" id="2"></a>
+                </div>
+
+                <div class="bus-booking-website" id="website-3">
+                    <a href="https://www.redbus.in/travels/e-bus-india" target="_blank"><img src="images/redbus.png" alt="redbus" class="bus-image" id="3"></a>
+                </div>
+
+                <div class="bus-booking-website" id="website-4">
+                    <a href="https://www.abhibus.com/" target="_blank"><img src="images/abhibus.png" alt="abhibus" class="bus-image" id="4"></a>
+                    
+                </div>
+            </div>
+        </div>
+        
+            <div class="book-train-container" id="book-train">
+                <h2><b>Book Your Train </b></h2>
+                <div class="book-train-section">
+                    
+                    <div class="train-booking-website" id="website-1">
+                        <a href="https://www.makemytrip.com/railways/" target="_blank"><img src="images/makemytrip.png" alt="makemytrip" class="train-image" id="1"></a>
+                    </div>
+    
+                    <div class="train-booking-website" id="website-2">
+                        <a href="https://www.irctc.co.in/nget/train-search" target="_blank"><img src="images/irctc.png" alt="IRCTC" class="train-image" id="2"></a>
+                    </div>
+    
+                    <div class="train-booking-website" id="website-3">
+                        <a href="https://www.railyatri.in/" target="_blank"><img src="images/RailYatri.png" alt="RailYatri" class="train-image" id="3"></a>
+                    </div>
+    
+                    <div class="train-booking-website" id="website-4">
+                        <a href="https://www.trainman.in/" target="_blank"><img src="images/trainman.png" alt="Trainman" class="train-image" id="4"></a>
+                        
+                    </div>
+                </div>
+            </div>
+    </main>
 </body>
 </html>
